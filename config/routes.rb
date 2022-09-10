@@ -7,19 +7,21 @@ Rails.application.routes.draw do
   registrations: "user/registrations",
   sessions: 'user/sessions'
 }
+  devise_scope :user do
+    post "/users/guest_sign_in" => "users/sessions#guest_sign_in"
+  end
 
-  scope module: :users do
-    root:to => "homes#top"
+  scope module: :user do
+    get "/" => "homes#top"
     resources :chats, only: [:show, :index, :create]
     resources :posts do
      resources :post_comments, only: [:create, :destroy]
      resource :bookmarks, only: [:create, :destroy]
     end
     get "/users/unsubscribe" => "users#unsubscribe"
-    resources :users, omly: [:show, :edit, :update, :destroy] do
+    resources :users, only: [:show, :edit, :update, :destroy] do
       resource :favorites, only: [:create, :destroy]
     end
-    post "/users/guest_sign_in" => "users#guest_sign_in"
     get "/posts/searches" => "posts#searches"
     get "/users/notifications" => "users#notifications"
   end
