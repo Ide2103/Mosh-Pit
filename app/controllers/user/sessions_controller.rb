@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class User::SessionsController < Devise::SessionsController
+  def new_guest
+    user = User.guest
+    sign_in user   # ユーザーをログインさせる
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -24,4 +29,9 @@ class User::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  protected
+    def after_sign_in_path_for(resource)
+      posts_path
+    end
+
 end

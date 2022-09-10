@@ -1,2 +1,25 @@
-<h1>User::Posts#new</h1>
-<p>Find me in app/views/user/posts/new.html.erb</p>
+<h6>新規投稿</h6>
+
+<div class="form-body p-4">
+  <% if @post.errors.any? %>
+    <%= @post.errors.count %>件のエラーが発生しました
+    <% @post.errors.full_messages.each do |message| %>
+      <%= message %>
+    <% end %>
+  <% end %>
+  <%= form_with model: @post do |f| %>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" aria-hidden="true"><i class="fas fa-pen"></i></span>
+    </div>
+    <%= f.text_area :post, class:"form-control", placeholder:"今の気持ちを書いてみましょう" %>
+  </div>
+  <div class="input-group mb-3">
+    <div>
+      <span class="input-group-text" aria-hidden="true"><i class="fas fa-image"></i></span>
+    </div>
+    <%= f.file_field :post_images, multiple: true, accept: "image/*" %>
+  </div>
+  <%= f.submit "投稿", class: "btn btn-outline-info" %>
+  <% end %>
+</div>
