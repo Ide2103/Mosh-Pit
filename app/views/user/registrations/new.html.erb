@@ -7,10 +7,15 @@
     <%= f.label :name %><br />
     <%= f.text_field :name, autofocus: true, autocomplete: "ニックネーム" %>
   </div>
+  
+  <div class="field">
+    <%= f.label :icon_image %><br />
+    <%= f.file_field :icon_image, accept: "image/*"  %>
+  </div>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "メールアドレス" %>
+    <%= f.email_field :email, autocomplete: "メールアドレス" %>
   </div>
 
   <div class="field">
