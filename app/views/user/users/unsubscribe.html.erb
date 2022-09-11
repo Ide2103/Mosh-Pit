@@ -1,0 +1,6 @@
+<h6 class="d-flex justify-content-center my-5">本当にアカウントを削除してもよろしいですか？</h6>
+
+<div class="d-flex justify-content-center">
+  <%= link_to "みんなのつぶやきに戻る", posts_path, class: "btn btn-outline-info mr-5" %>
+  <%= link_to "アカウントを削除する", user_path(@user), method: :delete, class: "btn btn-outline-danger" %>
+</div>

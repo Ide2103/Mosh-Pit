@@ -1,0 +1,47 @@
+<h6>プロフィール編集</h6>
+<div class="row">
+  <div class="col-10 ml-5">
+    <%= form_with model: @user, method: :patch do |f| %>
+    <div class="form-group row">
+      <%= f.label :icon_image, "プロフィール画像", class: "col-4 col-form-label" %>
+      <div class="form-group text-center">
+        <%= f.file_field :icon_image, accept:"image/*" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= f.label :name, "ニックネーム", class: "col-4 col-form-label" %>
+      <div class="form-group col-6">
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= f.label :address, "居住地", class: "col-4 col-form-label" %>
+      <div class="form-group col-6">
+        <%= f.text_field :address, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= f.label :age, "年齢", class: "col-4 col-form-label" %>
+      <div class="form-group col-6">
+        <%= f.text_field :age, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= f.label :my_favorite, "推し", class: "col-4 col-form-label" %>
+      <div class="form-group col-6">
+        <%= f.text_field :my_favorite, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <%= f.label :live_stance, "ライブの楽しみ方", class: "col-4 col-form-label" %>
+      <div class="form-group col-6">
+        <%= f.text_field :live_stance, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mb-5">
+      <%= f.submit "編集完了", class: "btn btn-outline-info mr-3" %>
+      <%= link_to "アカウントを削除する", users_unsubscribe_path(@user), class: "btn btn-outline-danger" %>
+    </div>
+    <% end %>
+  </div>
+</div>

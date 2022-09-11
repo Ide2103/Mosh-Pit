@@ -1,0 +1,32 @@
+<h6>ユーザ詳細ページ</h6>
+<p>ログイン中のユーザのときは編集ボタンが出る</p>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <% if @user.icon_image.attached? %>
+        <%= image_tag @user.icon_image, class: "rounded-circle", size: "100x100" %>
+      <% else %>
+        <%= image_tag 'blog_01.webp', class: "rounded-circle", size: "100x100" %>
+      <% end %>
+      <br>
+      <% if @user == current_user %>
+        <%= link_to edit_user_path(@user), class: "btn btn-outline-info btn-block btn-sm mt-3" do %>
+          <p><i class="fas fa-user-cog"></i></p>
+        <% end %>
+      <% else %>
+        <p>ユーザーお気に入り</p>
+        <p>誘う（フォロー）</p>
+      <% end %>
+    </div>
+
+    <div class="col-6">
+      <p><%= @user.name %></p>
+      <p><%= @user.address %></p>
+      <p><%= @user.age %></p>
+      <p><%= @user.my_favorite %></p>
+      <p><%= @user.live_stance %></p>
+    </div>
+  </div>
+</div>

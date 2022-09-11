@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User::SessionsController < Devise::SessionsController
-  def new_guest
+  def guest_sign_in
     user = User.guest
     sign_in user   # ユーザーをログインさせる
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
