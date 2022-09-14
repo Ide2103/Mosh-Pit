@@ -9,10 +9,14 @@ class Post < ApplicationRecord
   FILE_NUMBER_LIMIT = 3
 
   validate :validate_number_of_files
+  with_options presence: true, on: :publicize do
+    validates :post
+  end
 
   def bookmarked_by?(user)
     bookmarks.exists?(user_id: user.id)
   end
+  
   
   private
 
