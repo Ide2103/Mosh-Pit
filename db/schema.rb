@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_09_073616) do
+ActiveRecord::Schema.define(version: 2022_09_12_064819) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -67,14 +67,6 @@ ActiveRecord::Schema.define(version: 2022_09_09_073616) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
-    t.text "comment", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -89,6 +81,14 @@ ActiveRecord::Schema.define(version: 2022_09_09_073616) do
     t.integer "message_id", null: false
     t.string "action", null: false
     t.boolean "checked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "post_comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -143,11 +143,11 @@ ActiveRecord::Schema.define(version: 2022_09_09_073616) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "name", null: false
-    t.string "address"
+    t.string "address", default: "0", null: false
     t.integer "age"
     t.string "my_favorite"
-    t.string "live_stance"
-    t.integer "status", default: 0, null: false
+    t.string "live_stance", default: "0", null: false
+    t.boolean "status", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -1,0 +1,6 @@
+<div class="form-inline col-xs-4">
+    <%= form_with model: [post, post_comment], url: post_post_comments_url(post_id: post.id), method: :post do |f| %>
+    <%= f.text_area :comment, rows: '2', placeholder: "コメントをここに", class: "form-control" %>
+    <%= f.submit "送信する", class: "btn btn-outline-info ml-3" %>
+    <% end %>
+</div>

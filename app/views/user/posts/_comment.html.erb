@@ -1,0 +1,13 @@
+<% post.post_comments.each do |post_comment| %>
+<div class="card-list-containar py-1">
+  <div class="card w-75 mx-auto mt-1 p-1 shadow-sm">
+    <div class="col-10">
+      <p><%= post_comment.user.name %></p>
+      <p><%= post_comment.comment %></p>
+    </div>
+    <div class="d-flex justify-content-end">
+      <p class="mx-1"><%= l post_comment.created_at, format: :short %></p>
+    </div>
+  </div>
+</div>
+<% end %>

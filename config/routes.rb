@@ -15,8 +15,8 @@ Rails.application.routes.draw do
     root "homes#top"
     resources :chats, only: [:show, :index, :create]
     resources :posts do
-     resources :post_comments, only: [:create, :destroy]
-     resource :bookmarks, only: [:create, :destroy]
+      resources :post_comments, only: [:create, :destroy]
+      resource :bookmarks, only: [:create, :destroy]
     end
     get "/users/unsubscribe" => "users#unsubscribe"
     resources :users, only: [:show, :edit, :update, :destroy, :index] do
