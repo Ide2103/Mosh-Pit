@@ -5,18 +5,14 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <% if @user.icon_image.attached? %>
-        <%= image_tag @user.icon_image, class: "rounded-circle", size: "100x100" %>
-      <% else %>
-        <%= image_tag 'blog_01.webp', class: "rounded-circle", size: "100x100" %>
-      <% end %>
+      
       <br>
       <% if @user == current_user %>
         <%= link_to edit_user_path(@user), class: "btn btn-outline-info btn-block btn-sm mt-3" do %>
-          <p><i class="fas fa-user-cog"></i></p>
+          <i class="fas fa-user-cog"></i>
         <% end %>
       <% else %>
-        <p>ユーザーお気に入り</p>
+        <p>ユーザーお気に入り(favorite)</p>
         <p>誘う（フォロー）</p>
       <% end %>
     </div>

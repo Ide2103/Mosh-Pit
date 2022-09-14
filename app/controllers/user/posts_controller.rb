@@ -5,10 +5,18 @@ class User::PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    if @post.save
-      redirect_to posts_path
+    if params[:post]
+      if @post.save(context: :publicize)
+        redirect_to posts_path(@post)
+      else
+        render :new
+      end
     else
-      render :new
+      if @post.update(is_draft: true)
+        redirect_to user_path(current_user)
+      else
+        render :new
+      end
     end
   end
 
@@ -33,7 +41,7 @@ class User::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:user_id, :post, :is_draft, :created_at, post_images: [])
+    params.require(:post).permit(:post, :user_id, :is_draft, :created_at, post_images: [])
   end
 
 end

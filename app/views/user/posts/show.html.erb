@@ -3,6 +3,7 @@
 <div class="card-list-containar py-3">
   <div class="card w-75 mx-auto mt-2 p-1 shadow-sm">
     <div class="col-10">
+      <p><%= @post.user.name %></p>
       <p><%= @post.post %></p>
         <% @post.post_images.each do |post_image| %>
           <%= image_tag post_image, size: "120x90" %>
@@ -31,7 +32,6 @@
 <div>
 <%= render 'comment', post: @post %>
 </div>
-
 
 <div class="d-flex justify-content-center">
 <%= render 'comment_form', post: @post, post_comment: @post_comment %>

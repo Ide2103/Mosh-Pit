@@ -3,8 +3,12 @@
   <div class="card w-75 mx-auto mt-2 shadow-sm">
     <a href="/posts/<%= post.id %>" class="card-body text-dark ">
       <div class="row">
-        <div class="col-10">
-          <p><%= l post.created_at, format: :short %></p>
+        <div class="col-3">
+          <%= image_tag post.user.get_icon_image(50,50), class: "rounded-circle" %>
+          <%= post.user.name %><br>
+          <%= l post.created_at, format: :short %>
+        </div>
+        <div class="col-7">
           <p><%= post.post %></p>
           <% post.post_images.each do |post_image| %>
             <%= image_tag post_image, size: "50x50" %>
