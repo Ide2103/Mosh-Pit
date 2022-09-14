@@ -12,14 +12,26 @@
     <div class="input-group-prepend">
       <span class="input-group-text" aria-hidden="true"><i class="fas fa-pen"></i></span>
     </div>
-    <%= f.text_area :post, class:"form-control", placeholder:"今の気持ちを書いてみましょう" %>
+    <%= f.text_area :post, id: "post", class:"form-control", placeholder:"今の気持ちを書いてみましょう" %>
   </div>
   <div class="input-group mb-3">
     <div>
       <span class="input-group-text" aria-hidden="true"><i class="fas fa-image"></i></span>
     </div>
-    <%= f.file_field :post_images, multiple: true, accept: "image/*" %>
+    <%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %>
   </div>
-  <%= f.submit "投稿", class: "btn btn-outline-info" %>
+  <%= f.submit "投稿", class: "btn btn-outline-info mr-3" %>
+  <%= link_to "みんなのつぶやきに戻る", posts_path, class: "btn btn-outline-info" %>
   <% end %>
+</div>
+
+
+<form id ="post" action="" method="post" class:"form-control">
+  <label for=""></label>
+  <input type="text" placeholder:"今の気持ちを書いてみましょう">
+  <input type="file" multiple: true accept: "image/*">
+</form>
+
+<div>
+  <button type="submit" form="post">下書きに保存</button>
 </div>
