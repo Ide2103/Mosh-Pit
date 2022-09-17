@@ -61,3 +61,5 @@ gem "acts_as_follower", github: "tcocca/acts_as_follower"
 gem 'jquery-rails'
 gem 'enum_help'
 gem 'net-smtp'
+gem 'rails-i18n', '~> 6.0.0'
+gem 'devise-i18n'

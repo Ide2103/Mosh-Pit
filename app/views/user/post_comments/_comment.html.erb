@@ -1,7 +1,8 @@
-<% post.post_comments.each do |post_comment| %>
+<% post_comments.each do |post_comment| %>
 <div class="card-list-containar py-1">
   <div class="card w-75 mx-auto mt-1 p-1 shadow-sm">
     <div class="col-10">
+      <%= image_tag post_comment.user.get_icon_image(50,50), class: "rounded-circle" %>
       <p><%= post_comment.user.name %></p>
       <p><%= post_comment.comment %></p>
     </div>
