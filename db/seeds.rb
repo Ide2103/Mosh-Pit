@@ -10,3 +10,12 @@ Admin.create!(
   email: "b@b",
   password:  "bbbbbb",
 )
+
+Tag.create([
+  {name: '＃★★フェス' },
+  {name: '＃◯◯ライブハウスツアー' },
+  {name: '＃◎◎ジャパンフェス'},
+  {name: '＃！！カウントダウンフェス' },
+  {name: '＃◆◆ホールツアー' },
+  {name: '＃△△ドームツアー' },
+  ])

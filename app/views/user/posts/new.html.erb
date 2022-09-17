@@ -20,18 +20,19 @@
     </div>
     <%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %>
   </div>
-  <%= f.submit "投稿", class: "btn btn-outline-info mr-3" %>
+  <div class="input-group mb-3">
+    <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
+      <div>
+        <%= tag.label do %>
+          <%= tag.check_box %>
+          <%= tag.text %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <%= f.submit "投稿", :name => 'new', class: "btn btn-outline-info mr-3" %>
+  <%= f.submit '下書きに保存', :name => 'draft', class: 'mr-5 btn btn-sm btn-outline-secondary' %>
   <%= link_to "みんなのつぶやきに戻る", posts_path, class: "btn btn-outline-info" %>
   <% end %>
 </div>
 
-
-<form id ="post" action="" method="post" class:"form-control">
-  <label for=""></label>
-  <input type="text" placeholder:"今の気持ちを書いてみましょう">
-  <input type="file" multiple: true accept: "image/*">
-</form>
-
-<div>
-  <button type="submit" form="post">下書きに保存</button>
-</div>

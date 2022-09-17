@@ -4,10 +4,25 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  
+  has_one_attached :icon_image
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, through: :relationships, source: :followed
+
+
+  def get_icon_image(width,height)
+    unless icon_image.attached?
+      file_path = Rails.root.join('app/assets/images/28.png')
+      icon_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+    end
+    icon_image.variant(resize_to_limit: [width,height]).processed
+  end
 
   def self.guest
     find_or_create_by!(email: "guest@example.com") do |user|
@@ -16,15 +31,25 @@ class User < ApplicationRecord
       user.name = "ゲスト"
     end
   end
+
+  def follow(user)
+    relationships.create(followed_id: user.id)
+  end
+
+  def unfollow(user)
+    relationships.find_by(followed_id: user.id).destroy
+  end
+
+  def following?(user)
+    followings.include?(user)
+  end
   
-  has_many :bookmarks, dependent: :destroy
-  has_one_attached :icon_image
-  def get_icon_image(width, height)
-    unless icon_image.attached?
-      file_path = Rails.root.join('app/assets/images/28.png')
-      icon_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content.to_s)
+    else
+      User.where('name LIKE ?', content.to_s)
     end
-    icon_image.variant(resize_to_limit: [100, 100]).processed
   end
 
   enum address:{
@@ -39,7 +64,7 @@ class User < ApplicationRecord
      福岡県:40,佐賀県:41,長崎県:42,熊本県:43,大分県:44,宮崎県:45,鹿児島県:46,
      沖縄県:47
    }, _prefix: true
-   
+
    enum live_stance:{
      "---":0,
      最前で見たい:1,
@@ -48,5 +73,5 @@ class User < ApplicationRecord
      後方で大人見したい:4,
      座ってゆっくり音楽が聴きたい:5
    }, _prefix: true
-   
+
 end

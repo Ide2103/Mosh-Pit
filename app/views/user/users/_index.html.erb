@@ -1,0 +1,26 @@
+<% users.each do |user| %>
+<div class="card-list-containar py-3">
+  <div class="card w-75 mx-auto mt-2 shadow-sm">
+    <a href="/users/<%= user.id %>" class="card-body text-dark ">
+      <table class="col-8">
+        <tr>
+          <td><%= image_tag user.get_icon_image(50, 50), class: "rounded-circle" %></td>
+          <td id="follow-ajax-<%= user.id %>"><%= render "user/relationships/btn", user: user %></td>
+        </tr>
+        <tr>
+          <td>ニックネーム：</td>
+          <td><%= user.name %></td>
+        </tr>
+        <tr>
+          <td>年齢：</td>
+          <td><%= user.age %>歳</td>
+        </tr>
+        <tr>
+          <td>推しアーティスト：</td>
+          <td><%= user.my_favorite %></td>
+        </tr>
+      </table>
+    </a>
+  </div>
+</div>
+<% end %>
