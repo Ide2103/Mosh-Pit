@@ -1,0 +1,17 @@
+<h6 class="w-75 mx-auto mt-5">すべてのコメント</h6>
+<div>
+  <% @post_comments.each do |post_comment| %>
+    <div class="card w-75 mx-auto my-2 shadow-sm">
+    <div class="card-header font-weight-bolder text-white bg-info">
+      <%= image_tag post_comment.user.get_icon_image(50,50), class: "border rounded-circle" %>
+      <%= post_comment.user.name %>
+    </div>
+    <div class="card-body">
+      <p><%= post_comment.comment %></p>
+    </div>
+    <div class="blockquote-footer text-right px-2 pb-3">
+      <%= l post_comment.created_at, format: :short %>
+    </div>
+  </div>
+  <% end %>
+</div>

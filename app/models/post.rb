@@ -1,7 +1,9 @@
 class Post < ApplicationRecord
-  
+
   has_many :post_comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  has_many :tag_maps, dependent: :destroy
+  has_many :tags, through: :tag_maps
   belongs_to :user
 
   has_many_attached :post_images
@@ -16,7 +18,14 @@ class Post < ApplicationRecord
   def bookmarked_by?(user)
     bookmarks.exists?(user_id: user.id)
   end
-  
+
+  def self.search_for(content, method)
+    if method == 'perfect'
+      Post.where(post: content.to_s)
+    else
+      Post.where('post LIKE ?', content.to_s)
+    end
+  end
   
   private
 

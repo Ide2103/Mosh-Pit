@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_12_064819) do
+ActiveRecord::Schema.define(version: 2022_09_15_125442) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -102,12 +102,12 @@ ActiveRecord::Schema.define(version: 2022_09_12_064819) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.integer "follower_id_id", null: false
+    t.integer "follower_id", null: false
     t.integer "followed_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
-    t.index ["follower_id_id"], name: "index_relationships_on_follower_id_id"
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2022_09_12_064819) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name"
   end
 
   create_table "user_rooms", force: :cascade do |t|
@@ -143,10 +144,10 @@ ActiveRecord::Schema.define(version: 2022_09_12_064819) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "name", null: false
-    t.string "address", default: "0", null: false
+    t.integer "address", default: 0, null: false
     t.integer "age"
     t.string "my_favorite"
-    t.string "live_stance", default: "0", null: false
+    t.integer "live_stance", default: 0, null: false
     t.boolean "status", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
