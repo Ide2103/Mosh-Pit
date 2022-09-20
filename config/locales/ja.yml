@@ -11,9 +11,9 @@ ja:
       post:
     attributes:
       post:
-        post: 投稿文
-      post_comment: コメント
-        # commnet: コメント文
+        post: メッセージ
+      post_comments:
+        commnet: コメント
 
   date:
     abbr_day_names:

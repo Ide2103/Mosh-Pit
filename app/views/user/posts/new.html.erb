@@ -1,26 +1,20 @@
 <h6>新規投稿</h6>
-
 <div class="form-body p-4">
   <% if @post.errors.any? %>
-    <%= @post.errors.count %>件のエラーが発生しました
     <% @post.errors.full_messages.each do |message| %>
       <%= message %>
     <% end %>
   <% end %>
   <%= form_with model: @post do |f| %>
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" aria-hidden="true"><i class="fas fa-pen"></i></span>
-    </div>
-    <%= f.text_area :post, id: "post", class:"form-control", placeholder:"今の気持ちを書いてみましょう" %>
+  <div class="form-group mb-3">
+    <td><i class="fas fa-pen"></i></td>
+    <td><%= f.text_area :post, id: "post", class:"form-control", placeholder:"いま何をしていますか？" %></td>
   </div>
-  <div class="input-group mb-3">
-    <div>
-      <span class="input-group-text" aria-hidden="true"><i class="fas fa-image"></i></span>
-    </div>
-    <%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %>
+  <div class="form-group mb-3">
+    <td><i class="fas fa-image"></i></td>
+    <td><%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %></td>
   </div>
-  <div class="input-group mb-3">
+  <div class="checkbox-inline mb-3">
     <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
       <div>
         <%= tag.label do %>
@@ -31,8 +25,8 @@
     <% end %>
   </div>
   <%= f.submit "投稿", :name => 'new', class: "btn btn-outline-info mr-3" %>
-  <%= f.submit '下書きに保存', :name => 'draft', class: 'mr-5 btn btn-sm btn-outline-secondary' %>
-  <%= link_to "みんなのつぶやきに戻る", posts_path, class: "btn btn-outline-info" %>
+  <%= link_to "みんなのつぶやきに戻る", posts_path, class: "btn btn-outline-info mr-3" %>
+  <%= f.submit '下書きに保存', :name => 'draft', class: 'btn btn-outline-secondary mr-3' %>
   <% end %>
 </div>
 

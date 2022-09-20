@@ -1,4 +1,7 @@
 class User::UsersController < ApplicationController
+  before_action :authenticate_user!
+
+
   def index
     @users = User.all
     @user = User.find_by(params[:id])
@@ -9,6 +12,11 @@ class User::UsersController < ApplicationController
     @users = User.all
     @posts = @user.posts
     @bookmarks = Bookmark.where(user_id: @user.id).all
+    if @user == current_user
+      Post.page(params[:page]).reverse_order
+    else
+      Post.where(is_draft: false).page(params[:page]).reverse_order
+    end
   end
 
   def edit
@@ -24,8 +32,10 @@ class User::UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update(user_params)
     if @user.save
-       redirect_to user_path(@user.id), notice: "更新が完了しました"
+      flash[:notice] = '更新が完了しました'
+      redirect_to user_path(@user.id)
     else
+      flash.now[:alert] = '更新に失敗しました'
       render :edit
     end
   end
@@ -34,6 +44,7 @@ class User::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user == current_user
        @user.destroy
+       flash.now[:notice] = 'アカウントを削除しました'
        redirect_to root_path
     end
   end
