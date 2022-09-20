@@ -1,0 +1,25 @@
+<% post_comments.each do |post_comment| %>
+  <div class="card w-75 mx-auto my-2 shadow-sm">
+    <div class="card-header font-weight-bolder text-white bg-info">
+      <%= image_tag post_comment.user.get_icon_image(50,50), class: "border rounded-circle" %>
+      <%= post_comment.user.name %>
+    </div>
+    <div class="card-body">
+      <p class="text-info">＠ <%= post.user.name %>さん</p>
+      <%= post_comment.comment %>
+    </div>
+    <div class="blockquote-footer text-right px-2 pb-3">
+      <%= l post_comment.created_at, format: :short %>
+      <% if post_comment.user == current_user %>
+        <%= link_to edit_post_post_comment_path(post.id), method: :get, class: "btn btn-secondary btn-sm rounded-circle" do %>
+          <i class="fas fa-edit"></i>
+        <% end %>
+      <% end %>
+      <% if post_comment.user == current_user %>
+        <%= link_to post_post_comment_path(post.id), method: :delete, class: "btn btn-secondary btn-sm rounded-circle" do %>
+          <i class="fas fa-trash-alt"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
