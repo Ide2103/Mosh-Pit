@@ -1,28 +1,31 @@
-<h6>ユーザ詳細ページ</h6>
-
-<div class="container">
-  <div class="row">
-    <div class="col-4">
-      <%= image_tag @user.get_icon_image(100,100), class: "rounded-circle" %>
-      <br>
+<div class="w-75 mx-auto">
+  <%= render '/user/posts/new_post' %>
+</div>
+<div class="card text-center w-75 mx-auto my-2 shadow-sm">
+    <div class="card-header d-flex justify-content-center align-items-center font-weight-bolder text-white bg-info">
+      <%= image_tag @user.get_icon_image(120, 120), class: "border rounded-circle mr-3" %>
+      <div>
+        <%= @user.name %><br>
       <% if @user == current_user %>
-        <%= link_to edit_user_path(@user), class: "btn btn-outline-info btn-sm mt-3" do %>
+        <%= link_to edit_user_path(@user), class: "btn btn-outline-dark btn-sm" do %>
           <i class="fas fa-user-cog"></i> 編集する
         <% end %>
+        <%= link_to users_unsubscribe_path, class: "btn btn-outline-danger btn-sm" do %>
+          <i class="fas fa-user-slash"></i> 削除する
+        <% end %>
       <% else %>
-        <div id="follow-ajax-<%= @user.id %>">
-          <%= render "user/relationships/btn", user: @user %>
-        </div>
+      <div id="follow-ajax-<%= @user.id %>">
+        <%= render "user/relationships/btn", user: @user %>
+      </div>
       <% end %>
+      </div>
     </div>
-
-    <table class="col-6">
+    <div class="card-body mx-auto">
+      <table>
       <tr>
-        <td>ニックネーム：</td>
-        <td><%= @user.name %></td>
-      </tr>
         <td>居住地：</td>
         <td><%= @user.address %></td>
+      </tr>
       <tr>
         <td>年齢：</td>
         <td><%= @user.age %>歳</td>
@@ -35,34 +38,67 @@
         <td>ライブの楽しみ方：</td>
         <td><%= @user.live_stance %></td>
       </tr>
-    </table>
+      </table>
+    </div>
+</div>
+
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-post-tab" data-toggle="tab" href="#nav-post" role="tab" aria-controls="nav-post" aria-selected="true">投稿一覧（下書き含むheader色替え）</a>
+    <a class="nav-item nav-link" id="nav-comment-tab" data-toggle="tab" href="#nav-comment" role="tab" aria-controls="nav-comment" aria-selected="false">コメント一覧</a>
+    <a class="nav-item nav-link" id="nav-bookmark-tab" data-toggle="tab" href="#nav-bookmark" role="tab" aria-controls="nav-bookmark" aria-selected="false">いいねした投稿</a>
   </div>
-  <div class="row">
-    <div>
-    <h6>いいねした投稿一覧</h6>
-    </div>
+</nav>
+<!--投稿・下書き一覧-->
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-post" role="tabpanel" aria-labelledby="nav-post-tab">
+    <%= render 'user/posts/post', users: @users, posts: @posts %>
+  </div>
+  <!--コメント一覧-->
+  <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab">
+    <%= render 'user/relationships/follow_list', users: @users %>
+  </div>
+  <!--いいねした投稿一覧-->
+  <div class="tab-pane fade" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
     <% if @bookmarks.present? %>
-        <% @bookmarks.each do |bookmark| %>
-          <% post = bookmark.post %>
-    <div class="card w-75 mx-auto mt-2 shadow-sm">
-      <div class="row">
-        <div class="col-3">
-          <%= image_tag post.user.get_icon_image(50,50), class: "rounded-circle" %><br>
-          <%= post.user.name %><br>
-          <%= l post.created_at, format: :short %><br>
+      <% @bookmarks.each do |bookmark| %>
+        <% post = bookmark.post %>
+        <div class="card w-75 mx-auto my-2 shadow-sm">
+          <div class="card-header font-weight-bolder text-white bg-info">
+            <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %><br>
+            <%= post.user.name %>
           </div>
-          <div class="col-7">
-          <%= post.post %><br>
-          <% post.post_images.each do |post_image| %>
-            <%= image_tag post_image, size: "80x80" %>
-          <% end %>
-          <% post.tags.each do |tag| %>
-            <%= tag.name %>
-          <% end %>
+          <a href="/posts/<%= post.id %>" class="card-body text-dark ">
+          <div class="card-body">
+            <p><%= post.post %></p>
+            <% post.tags.each do |tag| %>
+              <%= tag.name %>
+            <% end %><br>
+            <% post.post_images.each do |post_image| %>
+              <%= image_tag post_image, size: "80x80" %>
+            <% end %>
           </div>
-    </div>
-    </div>
-    <% end %>
-    <% end %>
-    </div>
+          </a>
+          <div class="blockquote-footer text-right px-2 pb-3">
+            <%= l post.created_at, format: :short %>
+            <td id='bookmark_buttons_<%= post.id %>'>
+              <%= render "/user/bookmarks/bookmark", post: post %>
+            </td>
+            <td class="mx-1 text-info"><i class="fas fa-comments"></i><%= post.post_comments.count %></td>
+            <% if post.user == current_user %>
+              <%= link_to edit_post_path(post), class: "btn btn-secondary btn-sm rounded-circle" do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+            <% end %>
+            <% if post.user == current_user %>
+              <%= link_to post_path(post), method: :delete, class: "btn btn-secondary btn-sm rounded-circle" do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <% end %>
+  </div>
 </div>

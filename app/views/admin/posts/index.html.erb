@@ -1,0 +1,27 @@
+<h6 class="w-75 mx-auto mt-5">すべての投稿</h6>
+<div>
+  <% @posts.each do |post| %>
+    <div class="card w-75 mx-auto my-2 shadow-sm">
+    <% if post.is_draft == false %>
+      <div class="card-header font-weight-bolder text-white bg-info">
+        <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %>
+        <%= post.user.name %>
+      </div>
+    <% else post.is_draft == true %>
+      <div class="card-header font-weight-bolder text-white bg-secondary">
+        <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %>
+        <%= post.user.name %>
+      </div>
+    <% end %>
+    <div class="card-body">
+      <p><%= post.post %></p>
+    </div>
+    <div class="blockquote-footer text-right px-2 pb-3">
+      <%= l post.created_at, format: :short %>
+      <i class="far fa-star"></i><%= post.bookmarks.count %>
+      <i class="fas fa-comments"></i><%= post.post_comments.count %>
+    </div>
+  </div>
+  <% end %>
+</div>
+

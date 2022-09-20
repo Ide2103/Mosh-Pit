@@ -1,2 +1,89 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<h6 class="w-75 mx-auto">会員詳細</h6>
+<div class="card w-75 mx-auto my-3 shadow-sm">
+  <table class="table text-center">
+    <thead class="bg-info text-white">
+    <tr>
+      <th>会員ID</th>
+      <th>ニックネーム</th>
+      <th>メールアドレス</th>
+      <th>年齢</th>
+      <th>居住地</th>
+      <th>会員ステータス</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%= @user.id %></td>
+      <td><%= @user.name %></td>
+      <td><%= @user.email %></td>
+      <td><%= @user.age %></td>
+      <td><%= @user.address %></td>
+      <td>
+        <%= form_with model: @user, url:admin_user_path, method: :patch do |f| %>
+          <%= f.select :status, [['有効',true],['退会',false]] %>
+          <%= f.submit "更新", class: 'btn btn-outline-primary btn-sm ml-2' %>
+        <% end %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-post-tab" data-toggle="tab" href="#nav-post" role="tab" aria-controls="nav-post" aria-selected="true">"<%= @user.name %>"の投稿一覧</a>
+    <a class="nav-item nav-link" id="nav-comment-tab" data-toggle="tab" href="#nav-comment" role="tab" aria-controls="nav-comment" aria-selected="false">"<%= @user.name %>"のコメント一覧</a>
+  </div>
+</nav>
+  <!--投稿一覧-->
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-post" role="tabpanel" aria-labelledby="nav-post-tab">
+    <table class="table w-75 mx-auto mt-2 text-center">
+      <thead class="bg-info text-white">
+        <tr>
+          <th>投稿文</th>
+          <th>投稿時間</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <% if post.is_draft == true %>
+            <td class="text-secondary"><%= @user.post %></td>
+          <% else %>
+            <td><%= @user.posts %></td>
+          <% end %>
+          <td><%= l post.created_at, format: :short %></td>
+          <td><%= link_to "削除", admin_post_path(post), method: :delete, class: "btn btn-danger btn-sm" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!--コメント一覧-->
+  <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab">
+    <table class="table w-75 mx-auto mt-2 text-center">
+      <thead class="bg-info text-white">
+        <tr>
+          <th>元投稿ユーザー</th>
+          <th>コメント</th>
+          <th>投稿時間</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @post_comments.each do |post_comment| %>
+        <tr>
+          <td><%#= @post.user.name %></td>
+          <td><%#= @user.comment %></td>
+          <td><%= l post_comment.created_at, format: :short %></td>
+          <td><%= link_to "削除", admin_post_comment_path(post_comment), method: :delete, class: "btn btn-danger btn-sm" %></td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
