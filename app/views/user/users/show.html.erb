@@ -1,6 +1,14 @@
 <div class="w-75 mx-auto">
   <%= render '/user/posts/new_post' %>
 </div>
+<h4 class="w-75 mx-auto mt-5">
+  <% if @user == current_user %>
+    マイページ
+  <% else %>
+    <%= @user.name %> さんのページ
+  <% end %>
+</h4>
+
 <div class="card text-center w-75 mx-auto my-2 shadow-sm">
     <div class="card-header d-flex justify-content-center align-items-center font-weight-bolder text-white bg-info">
       <%= image_tag @user.get_icon_image(120, 120), class: "border rounded-circle mr-3" %>
@@ -14,50 +22,71 @@
           <i class="fas fa-user-slash"></i> 削除する
         <% end %>
       <% else %>
-      <div id="follow-ajax-<%= @user.id %>">
+      <div id="follow_button_<%= @user.id %>">
         <%= render "user/relationships/btn", user: @user %>
       </div>
       <% end %>
       </div>
     </div>
-    <div class="card-body mx-auto">
-      <table>
-      <tr>
-        <td>居住地：</td>
-        <td><%= @user.address %></td>
-      </tr>
-      <tr>
-        <td>年齢：</td>
-        <td><%= @user.age %>歳</td>
-      </tr>
-      <tr>
-        <td>推しアーティスト：</td>
-        <td><%= @user.my_favorite %></td>
-      </tr>
-      <tr>
-        <td>ライブの楽しみ方：</td>
-        <td><%= @user.live_stance %></td>
-      </tr>
-      </table>
+    <div class="card-body w-100 mx-auto">
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          居住地：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= @user.address %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          年齢：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= @user.age %>歳
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          推しアーティスト：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= @user.my_favorite %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          ライブの楽しみ方：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= @user.live_stance %>
+        </div>
+      </div>
+      <div class="mt-2">
+        <% if current_user != @user && current_user.following?(@user) && @user.following?(current_user) %>
+          <%= link_to "チャット", chat_path(@user), class: "btn btn-info btn-sm" %>
+        <% end %>
+      </div>
     </div>
 </div>
 
 
-<nav>
+<nav class="w-75 mx-auto mt-5">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-post-tab" data-toggle="tab" href="#nav-post" role="tab" aria-controls="nav-post" aria-selected="true">投稿一覧（下書き含むheader色替え）</a>
+    <a class="nav-item nav-link active" id="nav-post-tab" data-toggle="tab" href="#nav-post" role="tab" aria-controls="nav-post" aria-selected="true">投稿一覧</a>
     <a class="nav-item nav-link" id="nav-comment-tab" data-toggle="tab" href="#nav-comment" role="tab" aria-controls="nav-comment" aria-selected="false">コメント一覧</a>
     <a class="nav-item nav-link" id="nav-bookmark-tab" data-toggle="tab" href="#nav-bookmark" role="tab" aria-controls="nav-bookmark" aria-selected="false">いいねした投稿</a>
+    <a class="nav-item nav-link" id="nav-followings-tab" data-toggle="tab" href="#nav-followings" role="tab" aria-controls="nav-followings" aria-selected="false">フォロー</a>
+    <a class="nav-item nav-link" id="nav-followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="nav-followers" aria-selected="false">フォロワー</a>
   </div>
 </nav>
 <!--投稿・下書き一覧-->
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-post" role="tabpanel" aria-labelledby="nav-post-tab">
-    <%= render 'user/posts/post', users: @users, posts: @posts %>
+    <%= render '/user/posts/post', users: @users, posts: @posts %>
   </div>
   <!--コメント一覧-->
   <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab">
-    <%= render 'user/relationships/follow_list', users: @users %>
+    <%= render '/user/post_comments/comment', post_comments: @user.post_comments, post: @post %>
   </div>
   <!--いいねした投稿一覧-->
   <div class="tab-pane fade" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
@@ -82,10 +111,10 @@
           </a>
           <div class="blockquote-footer text-right px-2 pb-3">
             <%= l post.created_at, format: :short %>
-            <td id='bookmark_buttons_<%= post.id %>'>
+            <div id="bookmark_buttons_<%= post.id %>" class="d-inline">
               <%= render "/user/bookmarks/bookmark", post: post %>
-            </td>
-            <td class="mx-1 text-info"><i class="fas fa-comments"></i><%= post.post_comments.count %></td>
+            </div>
+            <div class="mx-1 d-inline"><i class="fas fa-comments"></i><%= post.post_comments.count %></div>
             <% if post.user == current_user %>
               <%= link_to edit_post_path(post), class: "btn btn-secondary btn-sm rounded-circle" do %>
                 <i class="fas fa-edit"></i>
@@ -100,5 +129,13 @@
         </div>
       <% end %>
       <% end %>
+  </div>
+    <!--フォロー-->
+  <div class="tab-pane fade" id="nav-followings" role="tabpanel" aria-labelledby="nav-followings-tab">
+    <%= render '/user/relationships/followed', followings: @followings %>
+  </div>
+    <!--フォロワー-->
+  <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
+    <%= render '/user/relationships/follower', followers: @followers %>
   </div>
 </div>

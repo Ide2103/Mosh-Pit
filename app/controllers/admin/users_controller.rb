@@ -7,8 +7,8 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @post_comments = PostComment.all
-    @posts = params[:tag_id].present? ? Tag.find(params[:tag_id]).posts.page(params[:page]) : Post.where(is_draft: false).page(params[:page]).reverse_order
+    @posts = @user.posts
+    @post_comments = @user.post_comments
   end
 
   def update
