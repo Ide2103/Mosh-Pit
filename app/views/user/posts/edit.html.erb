@@ -6,14 +6,14 @@
     <% end %>
   </ul>
 <% end %>
-  <div class="col-10 mx-auto">
-    <h6>投稿を編集する</h6>
+  <div class="w-75 mx-auto">
+    <h4 class="mt-5">投稿を編集する</h4>
     <%= form_with model: @post, method: :patch do |f| %>
-      <div class="form-group mb-3 text-info">
+      <div class="form-group mb-3">
         <td><i class="fas fa-pen"></i></td>
         <td><%= f.text_area :post, id: "post", class:"form-control" %></td>
       </div>
-      <div class="form-group mb-3 text-info">
+      <div class="form-group mb-3">
         <td><i class="fas fa-image"></i></td>
         <td><%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %></td>
       </div>

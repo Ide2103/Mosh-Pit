@@ -24,10 +24,12 @@
     </a>
     <div class="blockquote-footer text-right px-2 pb-3">
       <%= l post.created_at, format: :short %>
-      <td id='bookmark_buttons_<%= post.id %>'>
+      <div id="bookmark_buttons_<%= post.id %>" class="d-inline">
         <%= render "/user/bookmarks/bookmark", post: post %>
-      </td>
-      <td class="mx-1 text-info"><i class="fas fa-comments"></i><%= post.post_comments.count %></td>
+      </div>
+      <div id="comment_counts" class="d-inline mx-1">
+        <%= render "/user/post_comments/comment_icon", post: post %>
+      </div>
       <% if post.user == current_user %>
         <%= link_to edit_post_path(post), class: "btn btn-secondary btn-sm rounded-circle" do %>
           <i class="fas fa-edit"></i>
