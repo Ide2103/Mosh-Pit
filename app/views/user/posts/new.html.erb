@@ -1,5 +1,5 @@
-<h6>新規投稿</h6>
-<div class="form-body p-4">
+<h4 class="w-75 mx-auto mt-5">新規投稿</h4>
+<div class="form-body p-4 w-75 mx-auto">
   <% if @post.errors.any? %>
     <% @post.errors.full_messages.each do |message| %>
       <%= message %>
@@ -7,12 +7,12 @@
   <% end %>
   <%= form_with model: @post do |f| %>
   <div class="form-group mb-3">
-    <td><i class="fas fa-pen"></i></td>
-    <td><%= f.text_area :post, id: "post", class:"form-control", placeholder:"いま何をしていますか？" %></td>
+    <div><i class="fas fa-pen"></i></div>
+    <div><%= f.text_area :post, id: "post", class:"form-control", placeholder:"いま何をしていますか？" %></div>
   </div>
   <div class="form-group mb-3">
-    <td><i class="fas fa-image"></i></td>
-    <td><%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %></td>
+    <div><i class="fas fa-image"></i></div>
+    <div><%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %></div>
   </div>
   <div class="checkbox-inline mb-3">
     <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>

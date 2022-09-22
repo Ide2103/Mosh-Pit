@@ -1,1 +1,1 @@
-document.getElementById('follow-ajax-<%= @user.id %>').innerHTML = "<%= j(render partial: 'user/relationships/btn', locals: { user: @user }) %>"
+document.getElementById('follow_button_<%= @user.id %>').innerHTML = "<%= j(render partial: 'user/relationships/btn', locals: { user: @user }) %>"

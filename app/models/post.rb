@@ -23,10 +23,10 @@ class Post < ApplicationRecord
     if method == 'perfect'
       Post.where(post: content.to_s)
     else
-      Post.where('post LIKE ?', content.to_s)
+      Post.where('post LIKE ?', "%" + content.to_s + "%")
     end
   end
-  
+
   private
 
   def validate_number_of_files

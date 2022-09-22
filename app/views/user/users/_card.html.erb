@@ -1,0 +1,53 @@
+<% users.each do |user| %>
+  <div class="card w-75 mx-auto my-2 shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center text-white bg-info">
+      <div class="d-inline font-weight-bolder">
+        <%= image_tag user.get_icon_image(50, 50), class: "border rounded-circle" %>
+        <%= user.name %>
+      </div>
+      <div class="d-inline">
+        <%= "フォロー: #{user.relationships.count}人" %>
+        <%= "フォロワー: #{user.reverse_of_relationships.count}人" %>
+      </div>
+      <div id="follow_button_<%= user.id %>" class="d-inline">
+        <%= render "user/relationships/btn", user: user %>
+      </div>
+    </div>
+    <a href="/users/<%= user.id %>" class="text-dark">
+    <div class="card-body w-100 mx-auto">
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          居住地：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= user.address %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          年齢：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= user.age %>歳
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          推しアーティスト：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= user.my_favorite %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-4 d-flex justify-content-end">
+          ライブの楽しみ方：
+        </div>
+        <div class="col-6 col-md-8 d-flex justify-content-start">
+          <%= user.live_stance %>
+        </div>
+      </div>
+    </div>
+    </a>
+  </div>
+<% end %>

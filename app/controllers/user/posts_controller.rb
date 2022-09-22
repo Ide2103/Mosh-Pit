@@ -50,7 +50,7 @@ class User::PostsController < ApplicationController
       flash[:notice] = '更新が完了しました'
       redirect_to post_path(@post)
     else
-      flash[:alert] = '更新に失敗しました'
+      flash.now[:alert] = '更新に失敗しました'
       render :edit
     end
   end
@@ -58,7 +58,7 @@ class User::PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    flash[:notice] = '投稿を削除しました'
+    flash[:alert] = '投稿を削除しました'
     redirect_to posts_path
   end
 

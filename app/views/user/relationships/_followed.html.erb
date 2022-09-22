@@ -1,0 +1,5 @@
+<% if followings.exists? %>
+  <%= render '/user/users/card', users: followings %>
+<% else %>
+  <p class="w-75 mx-auto">まだフォローをしていません</p>
+<% end %>
