@@ -9,8 +9,9 @@ class User::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @users = User.all
-    @posts = @user.posts
+    @followers = @user.followers
+    @followings = @user.followings
+    @posts = @user.posts.page(params[:page]).reverse_order
     @bookmarks = Bookmark.where(user_id: @user.id).all
     if @user == current_user
       Post.page(params[:page]).reverse_order

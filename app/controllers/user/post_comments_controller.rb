@@ -12,6 +12,7 @@ class User::PostCommentsController < ApplicationController
 
   def edit
     @post = Post.find(params[:post_id])
+    @post_comment = @post.post_comments.find(params[:id])
     if @post_comment.user == current_user
       render :edit
     else
@@ -21,6 +22,7 @@ class User::PostCommentsController < ApplicationController
 
   def update
     @post = Post.find(params[:post_id])
+    @post_comment = @post.post_comments.find(params[:id])
     if @post_comment.update(post_comment_params)
       flash[:notice] = 'コメントの更新が完了しました'
       redirect_to post_path(@post)
@@ -32,6 +34,7 @@ class User::PostCommentsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:post_id])
+    @post_comment = @post.post_comments.find(params[:id])
     @post_comment.destroy
     flash[:notice] = 'コメントを削除しました'
   end

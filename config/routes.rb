@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   scope module: :user do
     root "homes#top"
-    resources :chats, only: [:show, :index, :create]
+    resources :chats, only: [:show, :create]
     resources :posts do
       resources :post_comments, only: [:create, :destroy, :edit, :update]
       resource :bookmarks, only: [:create, :destroy]
@@ -29,15 +29,13 @@ Rails.application.routes.draw do
   	get 'followings' => 'relationships#followings', as: 'followings'
   	get 'followers' => 'relationships#followers', as: 'followers'
     end
-    get "/users/notifications" => "users#notifications"
   end
 
    namespace :admin do
      get "/" => "homes#top"
      resources :users, only: [:index, :show, :update]
-     resources :posts, only: [:index, :destroy]
+     resources :posts, only: [:index, :destroy, :show]
      resources :post_comments, only: [:index, :destroy]
-     get "/admin/posts/searches" => "posts#searches"
   end
 
   get "/search" => "searches#search"

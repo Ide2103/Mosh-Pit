@@ -66,12 +66,16 @@
           <%= render "/searches/search_box" %>
         <% end %>
       </div>
-      <div class="notice">
-      <%= flash[:notice] %>
-      </div>
-      <div class="alert">
-      <%= flash[:alert] %>
-      </div>
+      <% if flash[:notice] %>
+        <div class="flash-notice py-2">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="flash-alert py-2">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
     <%= yield %>
     </main>
     <footer class="bg-dark text-white pt-5 pb-4 mt-2">

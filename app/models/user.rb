@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
+  has_many :rooms, through: :user_rooms
+  has_many :user_rooms, dependent: :destroy
+  has_many :chats, dependent: :destroy
 
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :reverse_of_relationships, source: :follower
@@ -33,12 +36,12 @@ class User < ApplicationRecord
     end
   end
 
-  def follow(user)
-    relationships.create(followed_id: user.id)
+  def follow(user_id)
+    relationships.create(followed_id: user_id)
   end
 
-  def unfollow(user)
-    relationships.find_by(followed_id: user.id).destroy
+  def unfollow(user_id)
+    relationships.find_by(followed_id: user_id).destroy
   end
 
   def following?(user)
@@ -49,7 +52,7 @@ class User < ApplicationRecord
     if method == 'perfect'
       User.where(name: content.to_s)
     else
-      User.where('name LIKE ?', content.to_s)
+      User.where('name LIKE ?', "%" + content.to_s + "%")
     end
   end
 
