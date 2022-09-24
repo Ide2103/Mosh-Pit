@@ -29,17 +29,17 @@
     </a>
     <div class="blockquote-footer text-right px-2 pb-3">
       <%= l post.created_at, format: :short %>
-      <td id='bookmark_buttons_<%= post.id %>'>
+      <div id='bookmark_buttons_<%= post.id %>' class="d-inline">
         <%= render "/user/bookmarks/bookmark", post: post %>
-      </td>
-      <td class="mx-1 text-info"><i class="fas fa-comments"></i><%= post.post_comments.count %></td>
+      </div>
+      <div class="d-inline mx-1"><i class="fas fa-comments"></i><%= post.post_comments.count %></div>
       <% if post.user == current_user %>
         <%= link_to edit_post_path(post), class: "btn btn-secondary btn-sm rounded-circle" do %>
           <i class="fas fa-edit"></i>
         <% end %>
       <% end %>
       <% if post.user == current_user %>
-        <%= link_to post_path(post), method: :delete, class: "btn btn-secondary btn-sm rounded-circle" do %>
+        <%= link_to post_path(post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-secondary btn-sm rounded-circle" do %>
           <i class="fas fa-trash-alt"></i>
         <% end %>
       <% end %>
