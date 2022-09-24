@@ -6,11 +6,13 @@
       <div class="card-header font-weight-bolder text-white bg-info">
         <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %>
         <%= post.user.name %>
+        <%= link_to "削除", admin_post_path(post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-danger btn-sm" %>
       </div>
     <% else post.is_draft == true %>
       <div class="card-header font-weight-bolder text-white bg-secondary">
         <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %>
         <%= post.user.name %>
+        <%= link_to "削除", admin_post_path(post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-danger btn-sm" %>
       </div>
     <% end %>
     <div class="card-body">
