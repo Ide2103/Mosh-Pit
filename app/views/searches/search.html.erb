@@ -1,0 +1,10 @@
+<% if @model == 'user' %>
+	<h6>"<%= @content %>"を含むニックネーム</h6>
+  <%= render '/user/users/index', users: @records %>
+<% elsif @model == 'post' %>
+	<h6>"<%= @content %>"を含むつぶやき</h6>
+  <%= render '/user/posts/post', posts: @records %>
+<% elsif @model == 'post_comment' %>
+	<h6>"<%= @content %>"を含むコメント</h6>
+  <%= render '/user/post_comments/comment', post_comments: @records %>
+<% end %>

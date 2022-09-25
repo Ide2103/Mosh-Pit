@@ -1,0 +1,19 @@
+<h4>ようこそ！Mosh Pitへ</h4>
+<p>
+ここではひとりで参加するライブをより楽しむべく、
+おひとりさま同士のマッチングや、ライブに関する情報共有をする場所です。<br>
+あなたのライブへの熱量をぶつけて、気の合うバディを見つけましょう！
+</p>
+
+  <div class="col-8 pt-3">
+    <%= link_to "初めての方は新規登録をしましょう", new_user_registration_path, class: "btn btn-outline-info" %>
+  </div>
+  <div class="col-8 pt-3">
+    <%= link_to "会員の方はログインしましょう", new_user_session_path, class: "btn btn-outline-info" %>
+  </div>
+  <div class="col-8 pt-3">
+    <%= link_to "登録なしでもお楽しみいただけます", users_guest_sign_in_path, method: :post, class: "btn btn-outline-info" %>
+  </div>
+
+<%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-info" %>
+<%= link_to "会員ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-info" %>

@@ -1,0 +1,80 @@
+<h6 class="ml-5">まずは会員登録をしましょう</h6>
+
+<div class="card w-75 p-3 mx-auto mt-2">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+  <%= render "user/shared/error_messages", resource: resource %>
+
+  <div class="form-group row">
+    <%= f.label :name, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.text_field :name, autofocus: true, autocomplete: "ニックネーム", class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :email, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.email_field :email, autocomplete: "メールアドレス", class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :password, class: "col-4 col-form-label" %>
+    <div class="form-group col-6">
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "パスワード" , class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :password_confirmation, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.password_field :password_confirmation, autocomplete: "パスワード（確認用）" , class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :icon_image, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.file_field :icon_image, autocomplete: "プロフィール画像", accept: "image/*"  %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :address, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.select :address, User.addresses.keys, {}, autocomplete: "居住地", class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :age, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.number_field :age, autocomplete: "年齢", class: 'form-control', class: "hoge", min: 18, max: 100 %> 歳
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :my_favorite, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.text_field :my_favorite, autocomplete: "推しアーティスト", class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :live_stance, class: "col-4 col-form-label" %><br />
+    <div class="form-group col-6">
+      <%= f.select :live_stance, User.live_stances.keys, {}, autocomplete: "ライブの楽しみ方", class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions d-flex justify-content-center py-2">
+    <%= f.submit "登録", class: "btn btn-outline-info" %>
+  </div>
+  <%= render "user/shared/links" %>
+<% end %>
+
+</div>

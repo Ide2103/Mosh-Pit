@@ -1,0 +1,21 @@
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+header {
+  text-align:center;
+  background-color:#17a2b8;
+}
+
+.flash-notice {
+    background-color: lightBlue;
+    color: white;
+    text-align: center;
+    font-size: 80%;
+  }
+
+.flash-alert {
+    background-color: moccasin;
+    color: white;
+    text-align: center;
+    font-size: 80%;
+  }

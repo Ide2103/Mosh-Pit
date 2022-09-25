@@ -1,0 +1,38 @@
+<h4 class="w-75 mx-auto mt-5">ユーザー一覧</h4>
+<div class="card w-75 mx-auto my-2 shadow-sm">
+  <table class="table table-hover text-center">
+    <thead class="bg-info text-white">
+      <tr>
+        <th>会員ID</th>
+        <th>ニックネーム</th>
+        <th>メールアドレス</th>
+        <th>年齢</th>
+        <th>居住地</th>
+        <th>会員ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td>
+            <%= link_to admin_user_path(user.id), class: "text-dark" do %>
+              <%= user.name %>
+            <% end %>
+          </td>
+          <td><%= user.email %></td>
+          <td><%= user.age %></td>
+          <td><%= user.address %></td>
+          <td><% if user.status == true %>
+            <p class="text-success">有効</p>
+            <% else %>
+            <p class="text-danger">退会</p>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <%= paginate @users %>
+</div>

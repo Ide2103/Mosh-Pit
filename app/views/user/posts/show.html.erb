@@ -1,0 +1,43 @@
+<div class="card w-75 mx-auto my-2 shadow-sm">
+  <div class="card-header font-weight-bolder text-white bg-info">
+    <%= image_tag @post.user.get_icon_image(50,50), class: "border rounded-circle" %>
+    <%= @post.user.name %>
+  </div>
+  <div class="card-body text-dark">
+    <p><%= @post.post %></p>
+    <% @post.tags.each do |tag| %>
+      <%= tag.name %>
+    <% end %><br>
+    <% @post.post_images.each do |post_image| %>
+      <%= image_tag post_image, size: "80x80" %>
+    <% end %>
+  </div>
+  <div class="blockquote-footer text-right px-2 pb-3">
+    <%= l @post.created_at, format: :short %>
+    <div id="bookmark_buttons_<%= @post.id %>" class="d-inline">
+      <%= render "/user/bookmarks/bookmark", post: @post %>
+    </div>
+    <div id="comment_counts" class="d-inline mx-1">
+      <%= render "/user/post_comments/comment_icon", post: @post %>
+    </div>
+    <% if @post.user == current_user %>
+      <%= link_to edit_post_path(@post), class: "btn btn-secondary btn-sm rounded-circle" do %>
+        <i class="fas fa-edit"></i>
+      <% end %>
+    <% end %>
+    <% if @post.user == current_user %>
+      <%= link_to post_path(@post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-secondary btn-sm rounded-circle" do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div id='post_comment_<%= @post.id %>'>
+  <%= render '/user/post_comments/comment', post_comments: @post.post_comments, post: @post %>
+</div>
+
+<div id='post_comment_post_<%= @post.id %>' class="d-flex justify-content-center">
+  <%= render '/user/post_comments/comment_form', post: @post, post_comment: @post_comment %>
+</div>
+
