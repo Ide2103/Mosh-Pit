@@ -14,6 +14,7 @@ class Post < ApplicationRecord
   with_options presence: true, on: :publicize do
     validates :post
   end
+  validates :post, length: { maximum: 200 }, on: :publicize
 
   def bookmarked_by?(user)
     bookmarks.exists?(user_id: user.id)

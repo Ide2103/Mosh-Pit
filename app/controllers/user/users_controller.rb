@@ -13,11 +13,6 @@ class User::UsersController < ApplicationController
     @followings = @user.followings
     @posts = @user.posts.page(params[:page]).reverse_order
     @bookmarks = Bookmark.where(user_id: @user.id).all
-    if @user == current_user
-      Post.page(params[:page]).reverse_order
-    else
-      Post.where(is_draft: false).page(params[:page]).reverse_order
-    end
   end
 
   def edit
@@ -52,6 +47,14 @@ class User::UsersController < ApplicationController
 
   def unsubscribe
     @user = current_user
+  end
+
+  def withdrawal
+    @user = User.find(params[:id])
+    @user.update(status: false)
+    reset_session
+    flash[:notice] = "退会処理が完了しました"
+    redirect_to root_path
   end
 
 

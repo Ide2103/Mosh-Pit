@@ -1,36 +1,35 @@
-<div class="row">
-<% if @post.errors.any? %>
-  <ul>
-    <% @post.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+<div class="w-75 mx-auto">
+  <h4 class="mt-5">投稿を編集する</h4>
+  <%= form_with model: @post, method: :patch do |f| %>
+    <div class="form-group mb-3">
+      <div><i class="fas fa-pen"></i></div>
+      <div><%= f.text_area :post, id: "post", class:"form-control" %></div>
+    </div>
+    <div class="form-group mb-3">
+      <div><i class="fas fa-image"></i></div>
+      <div><%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %></div>
+    </div>
+    <div class="checkbox-inline mb-3">
+    <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
+      <div>
+        <%= tag.label do %>
+          <%= tag.check_box %>
+          <%= tag.text %>
+        <% end %>
+      </div>
     <% end %>
-  </ul>
-<% end %>
-  <div class="w-75 mx-auto">
-    <h4 class="mt-5">投稿を編集する</h4>
-    <%= form_with model: @post, method: :patch do |f| %>
-      <div class="form-group mb-3">
-        <td><i class="fas fa-pen"></i></td>
-        <td><%= f.text_area :post, id: "post", class:"form-control" %></td>
-      </div>
-      <div class="form-group mb-3">
-        <td><i class="fas fa-image"></i></td>
-        <td><%= f.file_field :post_images, id: "post", multiple: true, accept: "image/*" %></td>
-      </div>
-      <div class="checkbox-inline mb-3">
-      <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
-        <div>
-          <%= tag.label do %>
-            <%= tag.check_box %>
-            <%= tag.text %>
-          <% end %>
-        </div>
+    </div>
+    <div class="form-inline mx-auto">
+      <% if @post.is_draft == true %>
+        <%= f.submit "下書きを公開", :name => 'publicize_draft', class: "btn btn-outline-info mr-3" %>
+        <%= f.submit '下書きを更新', :name => 'update_draft', class: 'btn btn-outline-secondary mr-3' %>
+      <% else %>
+        <%= f.submit "編集完了", :name => 'update_post', class: "btn btn-outline-info mr-3" %>
       <% end %>
-      </div>
-      <%= f.submit "投稿", :name => 'new', class: "btn btn-outline-info mr-3" %>
+    </div>
+    <div>
       <%= link_to "みんなのつぶやきに戻る", posts_path, class: "btn btn-outline-info mr-3" %>
-      <%= f.submit '下書きに保存', :name => 'draft', class: 'btn btn-outline-secondary mr-3' %>
-      <%= link_to "削除", post_path(@post), method: :delete, class: "btn btn-outline-danger" %>
-    <% end %>
-  </div>
+      <%= link_to "削除", post_path(@post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-outline-danger" %>
+    </div>
+  <% end %>
 </div>

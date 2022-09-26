@@ -8,68 +8,76 @@
     <%= @user.name %> さんのページ
   <% end %>
 </h4>
-
+<!--ユーザープロフィール-->
 <div class="card text-center w-75 mx-auto my-2 shadow-sm">
-    <div class="card-header d-flex justify-content-center align-items-center font-weight-bolder text-white bg-info">
-      <%= image_tag @user.get_icon_image(120, 120), class: "border rounded-circle mr-3" %>
+  <div class="card-header d-flex justify-content-center align-items-center font-weight-bolder text-white bg-info">
+    <%= image_tag @user.get_icon_image(120, 120), class: "border rounded-circle mr-3" %>
+    <div>
       <div>
-        <%= @user.name %><br>
-      <% if @user == current_user %>
-        <%= link_to edit_user_path(@user), class: "btn btn-outline-dark btn-sm" do %>
-          <i class="fas fa-user-cog"></i> 編集する
-        <% end %>
-        <%= link_to users_unsubscribe_path, class: "btn btn-outline-danger btn-sm" do %>
-          <i class="fas fa-user-slash"></i> 削除する
-        <% end %>
-      <% else %>
-      <div id="follow_button_<%= @user.id %>">
-        <%= render "user/relationships/btn", user: @user %>
+        <%= @user.name %>
       </div>
+      <div>
+        <% if @user == current_user %>
+          <%= link_to edit_user_path(@user), class: "btn btn-outline-dark btn-sm" do %>
+            <i class="fas fa-user-cog"></i> 編集する
+          <% end %>
+          <%= link_to users_unsubscribe_path, class: "btn btn-outline-danger btn-sm" do %>
+            <i class="fas fa-user-slash"></i> 退会する
+          <% end %>
+        <% else %>
+          <div id="follow_button_<%= @user.id %>">
+            <%= render "user/relationships/btn", user: @user %>
+          </div>
+        <% end %>
+      </div>
+      <div class="d-inline">
+        <%= "フォロー: #{@user.relationships.count}人" %>
+        <%= "フォロワー: #{@user.reverse_of_relationships.count}人" %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body w-100 mx-auto">
+    <div class="row">
+      <div class="col-6 col-md-4 d-flex justify-content-end">
+        居住地：
+      </div>
+      <div class="col-6 col-md-8 d-flex justify-content-start">
+        <%= @user.address %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-4 d-flex justify-content-end">
+        年齢：
+      </div>
+      <div class="col-6 col-md-8 d-flex justify-content-start">
+        <%= @user.age %>歳
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-4 d-flex justify-content-end">
+        推しアーティスト：
+      </div>
+      <div class="col-6 col-md-8 d-flex justify-content-start">
+        <%= @user.my_favorite %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-4 d-flex justify-content-end">
+        ライブの楽しみ方：
+      </div>
+      <div class="col-6 col-md-8 d-flex justify-content-start">
+        <%= @user.live_stance %>
+      </div>
+    </div>
+    <div class="mt-2">
+      <% if current_user != @user && current_user.following?(@user) && @user.following?(current_user) %>
+        <%= link_to "チャット", chat_path(@user), class: "btn btn-info btn-sm" %>
       <% end %>
-      </div>
     </div>
-    <div class="card-body w-100 mx-auto">
-      <div class="row">
-        <div class="col-6 col-md-4 d-flex justify-content-end">
-          居住地：
-        </div>
-        <div class="col-6 col-md-8 d-flex justify-content-start">
-          <%= @user.address %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-md-4 d-flex justify-content-end">
-          年齢：
-        </div>
-        <div class="col-6 col-md-8 d-flex justify-content-start">
-          <%= @user.age %>歳
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-md-4 d-flex justify-content-end">
-          推しアーティスト：
-        </div>
-        <div class="col-6 col-md-8 d-flex justify-content-start">
-          <%= @user.my_favorite %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-md-4 d-flex justify-content-end">
-          ライブの楽しみ方：
-        </div>
-        <div class="col-6 col-md-8 d-flex justify-content-start">
-          <%= @user.live_stance %>
-        </div>
-      </div>
-      <div class="mt-2">
-        <% if current_user != @user && current_user.following?(@user) && @user.following?(current_user) %>
-          <%= link_to "チャット", chat_path(@user), class: "btn btn-info btn-sm" %>
-        <% end %>
-      </div>
-    </div>
+  </div>
 </div>
 
-
+<!--画面下部のタブ部分-->
 <nav class="w-75 mx-auto mt-5">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-post-tab" data-toggle="tab" href="#nav-post" role="tab" aria-controls="nav-post" aria-selected="true">投稿一覧</a>
@@ -79,17 +87,102 @@
     <a class="nav-item nav-link" id="nav-followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="nav-followers" aria-selected="false">フォロワー</a>
   </div>
 </nav>
-<!--投稿・下書き一覧-->
+<!--投稿・下書き一覧タブ-->
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-post" role="tabpanel" aria-labelledby="nav-post-tab">
-    <%= render '/user/posts/post', users: @users, posts: @posts %>
+    <% unless @posts.present? %>
+      <p class="w-75 mx-auto">まだ投稿がありません</p>
+    <% end %>
+    <% @posts.each do |post| %>
+      <% if post.is_draft && @user == current_user %>
+        <div class="card w-75 mx-auto my-2 shadow-sm">
+          <div class="card-header font-weight-bolder text-white <%= post.is_draft ? "bg-secondary" : "bg-info" %>">
+            <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %>
+            <%= post.user.name %>
+          </div>
+          <a href="/posts/<%= post.id %>" class="card-body text-dark ">
+            <div class="card-body">
+              <p><%= post.post %></p>
+              <% post.tags.each do |tag| %>
+                <%= tag.name %>
+              <% end %><br>
+              <% post.post_images.each do |post_image| %>
+                <%= image_tag post_image, size: "80x80" %>
+              <% end %>
+            </div>
+          </a>
+          <div class="blockquote-footer text-right px-2 pb-3">
+            <%= l post.created_at, format: :short %>
+            <div id="bookmark_buttons_<%= post.id %>" class="d-inline">
+              <%= render "/user/bookmarks/bookmark", post: post %>
+            </div>
+            <div id="comment_counts" class="d-inline mx-1">
+              <%= render "/user/post_comments/comment_icon", post: post %>
+            </div>
+            <% if post.user == current_user %>
+              <%= link_to edit_post_path(post), class: "btn btn-secondary btn-sm rounded-circle" do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+            <% end %>
+            <% if post.user == current_user %>
+              <%= link_to post_path(post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-secondary btn-sm rounded-circle" do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% elsif !post.is_draft %>
+        <div class="card w-75 mx-auto my-2 shadow-sm">
+          <div class="card-header font-weight-bolder text-white <%= post.is_draft ? "bg-secondary" : "bg-info" %>">
+            <%= image_tag post.user.get_icon_image(50,50), class: "border rounded-circle" %>
+            <%= post.user.name %>
+          </div>
+          <a href="/posts/<%= post.id %>" class="card-body text-dark ">
+          <div class="card-body">
+              <p><%= post.post %></p>
+              <% post.tags.each do |tag| %>
+                <%= tag.name %>
+              <% end %><br>
+              <% post.post_images.each do |post_image| %>
+                <%= image_tag post_image, size: "80x80" %>
+              <% end %>
+          </div>
+          </a>
+          <div class="blockquote-footer text-right px-2 pb-3">
+            <%= l post.created_at, format: :short %>
+            <div id="bookmark_buttons_<%= post.id %>" class="d-inline">
+              <%= render "/user/bookmarks/bookmark", post: post %>
+            </div>
+            <div id="comment_counts" class="d-inline mx-1">
+              <%= render "/user/post_comments/comment_icon", post: post %>
+            </div>
+            <% if post.user == current_user %>
+              <%= link_to edit_post_path(post), class: "btn btn-secondary btn-sm rounded-circle" do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+            <% end %>
+            <% if post.user == current_user %>
+              <%= link_to post_path(post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-secondary btn-sm rounded-circle" do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
-  <!--コメント一覧-->
+  <!--コメント一覧タブ-->
   <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab">
+    <% unless @user.post_comments.present? %>
+      <p class="w-75 mx-auto">まだコメントがありません</p>
+    <% end %>
     <%= render '/user/post_comments/comment', post_comments: @user.post_comments, post: @post %>
   </div>
-  <!--いいねした投稿一覧-->
+  <!--いいねした投稿一覧タブ-->
   <div class="tab-pane fade" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
+    <% unless @bookmarks.present? %>
+      <p class="w-75 mx-auto">まだいいねした投稿がありません</p>
+    <% end %>
     <% if @bookmarks.present? %>
       <% @bookmarks.each do |bookmark| %>
         <% post = bookmark.post %>
@@ -130,11 +223,11 @@
       <% end %>
       <% end %>
   </div>
-    <!--フォロー-->
+    <!--フォロータブ-->
   <div class="tab-pane fade" id="nav-followings" role="tabpanel" aria-labelledby="nav-followings-tab">
     <%= render '/user/relationships/followed', followings: @followings %>
   </div>
-    <!--フォロワー-->
+    <!--フォロワータブ-->
   <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
     <%= render '/user/relationships/follower', followers: @followers %>
   </div>
