@@ -67,24 +67,6 @@ ActiveRecord::Schema.define(version: 2022_09_20_072639) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.integer "visitor_id", null: false
-    t.integer "visited_id", null: false
-    t.integer "post_id", null: false
-    t.integer "comment_id", null: false
-    t.integer "message_id", null: false
-    t.string "action", null: false
-    t.boolean "checked", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "post_comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "post_id", null: false

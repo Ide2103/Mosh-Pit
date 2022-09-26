@@ -17,10 +17,9 @@ class User::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  def create
-    reject_user
-    super
-  end
+  # def create
+  #   super
+  # end
 
   # DELETE /resource/sign_out
   # def destroy
