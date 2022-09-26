@@ -9,10 +9,11 @@ Rails.application.routes.draw do
 
   devise_for :users, skip: [:passwords], controllers: {
   registrations: "user/registrations",
+  passwords: 'users/passwords',
   sessions: 'user/sessions'
 }
   devise_scope :user do
-    post "/users/guest_sign_in" => "user/sessions#guest_sign_in"
+    post "/users/guest_sign_in" => "user/sessions#new_guest"
   end
 
   scope module: :user do
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
       resource :bookmarks, only: [:create, :destroy]
     end
     get "/users/unsubscribe" => "users#unsubscribe"
+    patch "/users/:id/withdrawal" => "users#withdrawal", as: "withdrawal"
     resources :users, only: [:show, :edit, :update, :destroy, :index] do
       resource :favorites, only: [:create, :destroy]
       resource :relationships, only: [:create, :destroy]

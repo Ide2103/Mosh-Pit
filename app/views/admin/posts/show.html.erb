@@ -1,5 +1,6 @@
 <div class="card w-75 mx-auto my-2 shadow-sm">
-  <div class="card-header font-weight-bolder text-white bg-info">
+<!--下書きはヘッダーグレー-->
+  <div class="card-header font-weight-bolder text-white <%= @post.is_draft ? "bg-secondary" : "bg-info" %>">
     <%= image_tag @post.user.get_icon_image(50,50), class: "border rounded-circle" %>
     <%= @post.user.name %>
     <%= link_to "削除", admin_post_path(@post), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-danger btn-sm" %>
@@ -33,7 +34,23 @@
     <% end %>
   </div>
 </div>
-
-<div id='post_comment_<%= @post.id %>'>
-  <%= render '/user/post_comments/comment', post_comments: @post.post_comments, post: @post %>
-</div>
+<!--コメント-->
+<% @post.post_comments.each do |post_comment| %>
+<% @post = post_comment.post %>
+  <div class="card w-75 mx-auto my-2 shadow-sm">
+    <div class="card-header font-weight-bolder text-white bg-info">
+      <%= image_tag post_comment.user.get_icon_image(50,50), class: "border rounded-circle" %>
+      <%= post_comment.user.name %>
+      <%= link_to "削除", admin_post_comment_path(post_comment), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-danger btn-sm" %>
+    </div>
+    <div class="card-body">
+      <p class="text-info">＠ <%= @post.user.name %>さん</p>
+      <%= link_to post_path(@post), class: "text-dark" do %>
+        <%= post_comment.comment %>
+      <% end %>
+    </div>
+    <div class="blockquote-footer text-right px-2 pb-3">
+      <%= l post_comment.created_at, format: :short %>
+    </div>
+  </div>
+<% end %>

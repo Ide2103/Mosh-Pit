@@ -1,1 +1,10 @@
-<h6>コメント編集</h6>
+<div class="w-75 mx-auto">
+  <h4 class="mt-5">コメントを編集する</h4>
+  <%= form_with model: [@post, @post_comment], method: :patch do |f| %>
+    <div class="form-group mb-3">
+      <div><i class="fas fa-pen"></i></div>
+      <div><%= f.text_area :comment, class:"form-control" %></div>
+    </div>
+    <%= f.submit "編集完了", class: "btn btn-outline-info" %>
+  <% end %>
+</div>

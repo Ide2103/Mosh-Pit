@@ -1,19 +1,92 @@
-<h4>ようこそ！Mosh Pitへ</h4>
+<div class="container-fluid w-75">
+<h4>　ようこそ！Mosh Pitへ</h4>
 <p>
-ここではひとりで参加するライブをより楽しむべく、
-おひとりさま同士のマッチングや、ライブに関する情報共有をする場所です。<br>
-あなたのライブへの熱量をぶつけて、気の合うバディを見つけましょう！
+ここは特に「ひとりで参加するライブ」をより楽しむべく、
+おひとりさま同士の出会いや、ライブに関する情報共有をする場所です。
+あなたのライブへの熱量をぶつけて、気の合う仲間を見つけましょう！
 </p>
 
-  <div class="col-8 pt-3">
-    <%= link_to "初めての方は新規登録をしましょう", new_user_registration_path, class: "btn btn-outline-info" %>
-  </div>
-  <div class="col-8 pt-3">
-    <%= link_to "会員の方はログインしましょう", new_user_session_path, class: "btn btn-outline-info" %>
-  </div>
-  <div class="col-8 pt-3">
-    <%= link_to "登録なしでもお楽しみいただけます", users_guest_sign_in_path, method: :post, class: "btn btn-outline-info" %>
+
+  <div class="row">
+    <div class="col-sm pt-1">
+      <%= link_to "初めての方は新規登録から", new_user_registration_path, class: "btn btn-outline-info" %>
+    </div>
+    <div class="col-sm pt-1">
+      <%= link_to "会員の方はここからログイン", new_user_session_path, class: "btn btn-outline-info" %>
+    </div>
+    <div class="col-sm pt-1">
+      <%= link_to "登録なしで使ってみる", users_guest_sign_in_path, method: :post, class: "btn btn-outline-info" %>
+    </div>
   </div>
 
-<%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-info" %>
-<%= link_to "会員ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-info" %>
+
+
+<!--概要説明-->
+<h4 class="border-bottom border-info mt-5">　モッシュピットとは？</h4>
+<p>
+  ライブの中で盛り上がった際に、大きな輪を形成しファン同士が激しくぶつかり合う行為をモッシュと言います。
+ライブの盛り上がりに比例して輪は大きくなっていき、激しさを増します。
+そんなモッシュが行われる場所のことをモッシュピットと呼びます。
+ファンが楽しさや感動を、跳ぶ、歌う、踊るなど体で表現し、共有できる場所です。
+</p>
+
+
+<!--機能説明スライド-->
+<h4 class="border-bottom border-info mt-5">　Mosh Pitの使い方</h4>
+  <div class="row border-bottom">
+    <div class="col-sm">
+      <%= image_tag "スクリーンショット (11).png", size: "350x200" %>
+    </div>
+    <div class="col-sm mt-3">
+    <p>
+      みんなのつぶやきページでは、すべてのライブ好きの仲間のつぶやきを見ることができます。
+      あなたもたくさんの感想や情報を投稿してみましょう！
+    </p>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-sm mt-5">
+    <p>
+      気になったユーザーはフォローしましょう。
+      相互にフォロー関係になるとチャットをすることができます。
+      気の合う仲間とは思いっきり語り合ったり、ライブに誘ったりしてみましょう。
+    </p>
+    </div>
+    <div class="col-sm">
+      <%= image_tag "スクリーンショット (14).png", size: "400x250" %>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-sm">
+      <%= image_tag "スクリーンショット (15).png", size: "350x200" %>
+    </div>
+    <div class="col-sm mt-5">
+    <p>
+      タグ検索をすると自分が参戦予定のフェスやライブの情報を効率的に得ることができます。
+    </p>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-sm mt-5">
+    <p>
+      気になった投稿にはコメントをしてみましょう！
+    </p>
+    </div>
+    <div class="col-sm">
+      <%= image_tag "スクリーンショット (17).png", size: "300x200" %>
+    </div>
+  </div>
+
+
+  <div class="row my-5">
+    <div class="col-sm pt-1">
+      <%= link_to "初めての方は新規登録から", new_user_registration_path, class: "btn btn-outline-info" %>
+    </div>
+    <div class="col-sm pt-1">
+      <%= link_to "会員の方はここからログイン", new_user_session_path, class: "btn btn-outline-info" %>
+    </div>
+    <div class="col-sm pt-1">
+      <%= link_to "登録なしで使ってみる", users_guest_sign_in_path, method: :post, class: "btn btn-outline-info" %>
+    </div>
+  </div>
+</div>

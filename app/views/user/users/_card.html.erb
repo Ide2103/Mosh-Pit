@@ -2,8 +2,10 @@
   <div class="card w-75 mx-auto my-2 shadow-sm">
     <div class="card-header d-flex justify-content-between align-items-center text-white bg-info">
       <div class="d-inline font-weight-bolder">
-        <%= image_tag user.get_icon_image(50, 50), class: "border rounded-circle" %>
-        <%= user.name %>
+        <a href="/users/<%= user.id %>" class="text-white">
+          <%= image_tag user.get_icon_image(50, 50), class: "border rounded-circle" %>
+          <%= user.name %>
+        </a>
       </div>
       <div class="d-inline">
         <%= "フォロー: #{user.relationships.count}人" %>
@@ -13,7 +15,6 @@
         <%= render "user/relationships/btn", user: user %>
       </div>
     </div>
-    <a href="/users/<%= user.id %>" class="text-dark">
     <div class="card-body w-100 mx-auto">
       <div class="row">
         <div class="col-6 col-md-4 d-flex justify-content-end">
@@ -48,6 +49,5 @@
         </div>
       </div>
     </div>
-    </a>
   </div>
 <% end %>

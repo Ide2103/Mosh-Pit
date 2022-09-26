@@ -24,3 +24,19 @@ Tag.create([
   {name: '＃SWEET LOVE SHOWER 2022' },
   {name: '＃RISING SUN ROCK FESTIVAL' },
   ])
+
+users = User.create!(
+  [
+    {email: 'olivia@test.com', name: 'Olivia', password: 'password', icon_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/app/assets/images/15294.png"), filename:"15294.png")},
+    {email: 'james@test.com', name: 'James', password: 'password', icon_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/app/assets/images/15294 (2).png"), filename:"15294 (2).png")},
+    {email: 'lucas@test.com', name: 'Lucas', password: 'password', icon_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/app/assets/images/15294 (1).png"), filename:"15294 (1).png")}
+  ]
+)
+
+Post.create!(
+  [
+    {post: '明日はフェスです', user_id: users[0].id },
+    {post: 'やっぱりバンドはかっこいい！', user_id: users[1].id },
+    {post: 'パンクロック好きにはオススメ！', user_id: users[2].id }
+  ]
+)

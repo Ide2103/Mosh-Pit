@@ -1,9 +1,11 @@
 class User::ChatsController < ApplicationController
+  before_action :authenticate_user!
 
   def show
     @user = User.find(params[:id])
     rooms = current_user.user_rooms.pluck(:room_id)
     user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
+
     if user_room.nil?
       @room = Room.new
       @room.save
@@ -18,7 +20,7 @@ class User::ChatsController < ApplicationController
   end
 
   def create
-    @chat = Chat.new(chat_params)
+    @chat = current_user.chats.new(chat_params)
     unless @chat.save!
       flash[:alert] = 'メッセージを入力してください'
     end

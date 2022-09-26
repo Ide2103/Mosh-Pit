@@ -1,5 +1,6 @@
 <div class="card w-75 mx-auto my-2 shadow-sm">
-  <div class="card-header font-weight-bolder text-white bg-info">
+<!--下書きはヘッダー色グレー-->
+  <div class="card-header font-weight-bolder text-white <%= @post.is_draft ? "bg-secondary" : "bg-info" %>">
     <%= image_tag @post.user.get_icon_image(50,50), class: "border rounded-circle" %>
     <%= @post.user.name %>
   </div>
@@ -32,11 +33,11 @@
     <% end %>
   </div>
 </div>
-
+<!--コメント表示-->
 <div id='post_comment_<%= @post.id %>'>
   <%= render '/user/post_comments/comment', post_comments: @post.post_comments, post: @post %>
 </div>
-
+<!--コメント投稿-->
 <div id='post_comment_post_<%= @post.id %>' class="d-flex justify-content-center">
   <%= render '/user/post_comments/comment_form', post: @post, post_comment: @post_comment %>
 </div>

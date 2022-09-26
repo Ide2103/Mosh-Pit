@@ -29,14 +29,14 @@
                 <%= link_to "みんなのつぶやき", posts_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
-                <%= link_to 'フレンド', users_path, class: 'nav-link' %>
+                <%= link_to 'すべてのユーザー', users_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
               </li>
             <% elsif admin_signed_in? %>
               <li class="nav-item">
-                <%= link_to '会員一覧', admin_users_path, class: 'nav-link' %>
+                <%= link_to 'ユーザー一覧', admin_users_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to "投稿一覧", admin_posts_path, class: 'nav-link' %>
@@ -71,11 +71,11 @@
           <%= flash[:notice] %>
         </div>
       <% end %>
-      <% if flash[:alert] %>
-        <div class="flash-alert py-2">
+      <div class="flash-alert py-2<% unless flash[:alert] %> d-none<% end %>" id="flash-alert">
+        <% if flash[:alert] %>
           <%= flash[:alert] %>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     <%= yield %>
     </main>
     <footer class="bg-dark text-white pt-5 pb-4 mt-2">
