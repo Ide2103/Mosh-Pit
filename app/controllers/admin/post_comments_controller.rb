@@ -9,7 +9,7 @@ class Admin::PostCommentsController < ApplicationController
     @post_comment = PostComment.find(params[:id])
     @post_comment.destroy
     flash[:notice] = '投稿を削除しました'
-    redirect_to admin_user_path(@post_comment.user_id)
+    redirect_to admin_post_comments_path
   end
 
 

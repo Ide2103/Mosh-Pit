@@ -2,12 +2,12 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @users = User.page(params[:page]).per(15)
+    @users = User.page(params[:page]).per(15).reverse_order
   end
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts
+    @posts = @user.posts.page(params[:page]).per(10).reverse_order
     @post_comments = @user.post_comments
   end
 

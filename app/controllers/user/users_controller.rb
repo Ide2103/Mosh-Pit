@@ -11,7 +11,7 @@ class User::UsersController < ApplicationController
     @user = User.find(params[:id])
     @followers = @user.followers
     @followings = @user.followings
-    @posts = @user.posts.page(params[:page]).reverse_order
+    @posts = @user.posts.page(params[:page]).per(10).reverse_order
     @bookmarks = Bookmark.where(user_id: @user.id).all
   end
 

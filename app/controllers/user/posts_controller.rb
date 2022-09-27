@@ -28,9 +28,9 @@ class User::PostsController < ApplicationController
     end
   end
 
-# もしくは公開された投稿のみ表示（タグ検索に対応）
+# 公開された投稿のみ表示（タグ検索に対応）
   def index
-    @posts = params[:tag_id].present? ? Tag.find(params[:tag_id]).posts.page(params[:page]) : Post.where(is_draft: false).page(params[:page]).reverse_order
+    @posts = params[:tag_id].present? ? Tag.find(params[:tag_id]).posts.page(params[:page]) : Post.where(is_draft: false).page(params[:page]).per(15).reverse_order
   end
 
   def show
