@@ -35,8 +35,8 @@ users = User.create!(
 
 Post.create!(
   [
-    {post: '明日はフェスです', is_draft: true, user_id: users[0].id },
-    {post: 'やっぱりバンドはかっこいい！', is_draft: true, user_id: users[1].id },
+    {post: '明日はフェスです', is_draft: false, user_id: users[0].id },
+    {post: 'やっぱりバンドはかっこいい！', is_draft: false, user_id: users[1].id },
     {post: 'パンクロック好きにはオススメ！', is_draft: true, user_id: users[2].id }
   ]
 )
