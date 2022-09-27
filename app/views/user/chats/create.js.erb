@@ -1,2 +1,10 @@
 $('.message').append("<div class='d-flex justify-content-end'><p class='rounded bg-secondary text-white'><%= @chat.message %></p></div>");
 $('input[type=text]').val("")
+<% if flash[:alert] %>
+document.getElementById('flash-alert').innerHTML = '<%= flash[:alert] %>';
+document.getElementById('flash-alert').classList.remove("d-none");
+<% else %>
+document.getElementById('flash-alert').classList.add("d-none");
+document.getElementById('flash-alert').innerHTML = '';
+<% end %>
+<% flash.clear %>

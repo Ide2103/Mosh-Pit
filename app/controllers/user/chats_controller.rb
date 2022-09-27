@@ -21,7 +21,7 @@ class User::ChatsController < ApplicationController
 
   def create
     @chat = current_user.chats.new(chat_params)
-    unless @chat.save!
+    unless @chat.save
       flash[:alert] = 'メッセージを入力してください'
     end
   end
