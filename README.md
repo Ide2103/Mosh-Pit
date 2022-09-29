@@ -31,8 +31,11 @@
 - IDE：Cloud9
 
 ## 使用素材
-- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名とURLを明記してください。
-- 使用しない場合は、使用素材の項目をREADMEから削除してください。
+- Making Logo
+STORES https://logo-maker.stores.jp/
+
+- Icon sample
+ソコスト https://soco-st.com/
 
 
 This README would normally document whatever steps are necessary to get the
@@ -41,7 +44,7 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
-
+- 6.1.4
 * System dependencies
 
 * Configuration
@@ -56,4 +59,3 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
